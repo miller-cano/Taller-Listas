@@ -6,27 +6,44 @@
 
 using namespace std;
 
+/////////////////////////////////////////////////////////////////////////
 struct informacion
 {
-		string nombre; 
-        long numero;
-        string tipoContacto;
+	string nombre; 
+    long numero;
+    string tipoContacto;
 };
 
 struct nodo
 {
-       struct informacion info; 						    
-       struct nodo *sgte;
+    struct informacion info; 						    
+    struct nodo *sgte;
 };
-////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 struct nodo * crearLista()
 {
-	struct nodo *cabeza;
+    struct nodo *cabeza;
     cabeza = new(struct nodo);
     cabeza->sgte = cabeza;
     cabeza->info.nombre="Soy el Nodo cabecera";
     return cabeza;
 }
+//////////////////////////////////////////////////////////////////////
+void mostrarLista(struct nodo *cabeza)
+{	
+	int i = 1;
+	struct nodo *p;
+	p = cabeza->sgte;
+	cout<<"\n\t*****************************************************************************";
+	cout<<"\n\t|                 CONTACTOS";
+	cout<<"\n\t*****************************************************************************";
+	while(p != cabeza) {
+		cout<<"\n\t|   "<<i<<") "<<p->info.nombre<<"\t"<<p->info.numero<<"\t"<<p->info.tipoContacto;
+		i++;
+		p = p->sgte;
+	}
+	cout<<"\n\t****************************************************************************"<<endl;	
+}	
 ///////////////////////////////////////////////////////////////////////
 void insertarInicio(struct nodo *cabeza, struct informacion datos)
 {
@@ -39,7 +56,7 @@ void insertarInicio(struct nodo *cabeza, struct informacion datos)
 ///////////////////////////////////////////////////////////////////////
 void cargarArchivo(struct nodo *cabeza)
 {
-	struct informacion datos;
+    struct informacion datos;
     ifstream archivo;
     archivo.open("agendaTelefonica.txt");
 	if (archivo.is_open()){
@@ -48,10 +65,12 @@ void cargarArchivo(struct nodo *cabeza)
 			insertarInicio(cabeza, datos); 			
 		}
 		archivo.close();
-	//	mostrarLista(cabeza);	
+		mostrarLista(cabeza);	
 	}
 	else {
-	    cout<<"*************  archivo no encontrado **** "<<endl;
+	    cout<<"\n *******************************************";
+		cout<<"\n |          ARCHIVO NO ENCONTRADO          |";
+		cout<<"\n *******************************************"<<endl;
 	}
 }
 //////////////////////////////////////////////////////////////////////
@@ -94,7 +113,6 @@ void ordenarLista(struct nodo *cabeza)
 	}
 }
 ///////////////////////////////////////////////////////////////////////////
-
 void insertarOrdenado(struct nodo *cabeza, struct informacion datos)
 {
 	ordenarLista(cabeza);
@@ -125,152 +143,124 @@ void insertarOrdenado(struct nodo *cabeza, struct informacion datos)
 	cout<<"\n ************************************"<<endl;
 }
 /////////////////////////////////////////////////////////////////////////////
-void eliminarElementoInfo(nodo *cabeza,long num){
-	
-    if(cabeza->sgte == NULL){
-        cout<<"\n **";
+void eliminarElementoInfo(struct nodo *cabeza,long num)
+{
+    if(cabeza->sgte == cabeza){
+        cout<<"\n *****************************************";
         cout<<"\n |          LA LISTA ESTA VACIA          |";
-        cout<<"\n *"<<endl;
+        cout<<"\n *****************************************"<<endl;
     }
     else{
         struct nodo *p, *ant = NULL, *q;
         p = cabeza->sgte;
-        if(p->info.numero == num && p->sgte == NULL){
-            cabeza->sgte = NULL;
+        if(p->info.numero == num && p->sgte == cabeza){
+            cabeza->sgte = cabeza;
             delete p;
-            cout<<"\n **";
+            cout<<"\n ************************************";
             cout<<"\n |          DATO ELIMINADO          |";
-            cout<<"\n **"<<endl;
+            cout<<"\n ************************************"<<endl;
         }
-            else if(cabeza->sgte != NULL){
-                while((p->info.numero != num) && (p->sgte != NULL)){
+            else if(cabeza->sgte != cabeza){
+                while((p->info.numero != num) && (p->sgte != cabeza)){
                     ant = p;
                     p = p->sgte;
                 }
-
-	if(p->sgte == NULL && p->info.numero != num){
-                    cout<<"\n **";
+				if(p->sgte == cabeza && p->info.numero != num){
+                    cout<<"\n ******************************************************";
                     cout<<"\n |          DATO NO ENCONTRADO PARA ELIMINAR          |";
-                    cout<<"\n **"<<endl;
+                    cout<<"\n ******************************************************"<<endl;
                 }
                     else if(ant == NULL){ //si es el primer nodo
                         cabeza->sgte = p->sgte;
-                        q = p->sgte;
                         delete p;
-                        cout<<"\n **";
+                        cout<<"\n ************************************";
                         cout<<"\n |          DATO ELIMINADO          |";
-                        cout<<"\n **"<<endl;
+                        cout<<"\n ************************************"<<endl;
                     }
                         else{
                             ant->sgte = p->sgte;
-                            if(p->sgte != NULL){
-                                q = p->sgte;
-        
-                            }
                             delete p;
-                            cout<<"\n **";
+                            cout<<"\n ************************************";
                             cout<<"\n |          DATO ELIMINADO          |";
-                            cout<<"\n **"<<endl;
+                            cout<<"\n ************************************"<<endl;
                         }
             }
     }
 }
-void BuscarNumero(nodo *cabeza,  long Num){
-	
-	nodo *Recorre=cabeza->sgte;
-	long Copia=Num;
-	int cifras,pos=1;
-	
-	while(Copia>=10){
-		Copia = Copia/10;
-		cifras++;	 
-	}	
-	
-	if (cifras != 10){
-		cout<<"\nIngrese un numero valido";
-	}else{
-		
-		 while(recorre != NULL){
-		 		
-		 		if(recorre->info.numero == Num){
-		 			
-		 			cout<<"\nEl numero: "<<Num<<" Fue encontrado en la posicion:"<<pos;
-		 			break;
-				 }
-				recorre=recorre->sgte;	
-				pos++;	 	
-		 }
-		 if (recorre==NULL){
-		 	cout<<"\nEl contacto no fue encontrado";
-		 }
-		 
-		
-	}
-				
-}
-
-
-void MostrarListaTC(nodo *cabeza, string TpContacto){
-	
-	nodo *mostrar=cabeza->sgte;
-	
-	cout<<"\n Los Contactos De" <<TpContacto<< " son:";
-	
-	while(mostrar != NULL){
-		
-		if(TpContacto == mostrar->info.tipoContacto){
-						
-			cout<<" "<< mostrar->info.nombre<<" "<<mostrar->info.numero<<"\n"; 
-			}
-	
-		mostrar=mostrar->sgte;
-					
-	}
-				
-}
-	
-void MostrarLista(nodo *cabeza){
-	
-	nodo *mostrar =cabeza->sgte;
-	
-	cout<<"\nMostrando Lista...";
-	
-	 while(mostrar != NULL){
-	 	
-	 	cout<<" "<<mostrar->info.nombre<<" "<<mostrar->info.tipoContacto<<" "<<mostrar->info.numero<<"\n"; 
-	 }
-}	
-
-void GuardarLista(nodo *cabeza){
-	
-	ofstream ArchContactos;
-	nodo *p=cabeza->sgte;
-	
-	archivo.open("Contactos.txt ");
-	
+////////////////////////////////////////////////////////////////
+void BuscarNumero(struct nodo *cabeza, long num)
+{
+	struct nodo *p;
 	int i = 1;
-	
-	if(p->sgte == NULL){
-		cout<<"\nLa lista esta vacia";
+	p = cabeza->sgte;
+	if(p->sgte == cabeza){
+		cout<<"\n *****************************************";
+        cout<<"\n |          LA LISTA ESTA VACIA          |";
+        cout<<"\n *****************************************"<<endl;
 	}
-	
-	if (ArchContactos.is_open()){
-		
-		while(p != NULL){
-			
-			ArchContactos<<p->info.nombre<<" "<<p->info.tipoContacto<<" "<<p->info.numero;
+	else{
+		while(p->sgte != cabeza && p->info.numero != num){
+			p = p->sgte;	
+			i++;	 	
+		}
+		if(p->info.numero == num){
+			cout<<"\n *****************************************";
+			cout<<"\n |          CONTACTO ENCONTRADO          |";
+			cout<<"\n *****************************************"<<endl;
+			cout<<"\n ************************************************************************************";
+			cout<<"\n |          EL CONTACTO BUSCADO SE ENCUENTRA EN LA POSICION DE NODO [ "<<i<<" ]           |";
+			cout<<"\n ************************************************************************************"<<endl;
+		}
+			else{
+				cout<<"\n ********************************************";
+				cout<<"\n |          CONTACTO NO ENCONTRADO          |";
+				cout<<"\n ********************************************"<<endl;
+			}
+	}			
+}
+//////////////////////////////////////////////////////////////////////////
+void mostrarListaTC(nodo *cabeza, string tpContacto)
+{
+	int i = 1;
+	struct nodo *p;
+	p = cabeza->sgte;
+	cout<<"\n\t*****************************************************************************";
+	cout<<"\n\t|                 CONTACTOS DE TIPO "<<tpContacto;
+	cout<<"\n\t*****************************************************************************";
+	while(p != cabeza) {
+		if(tpContacto == p->info.tipoContacto){
+			cout<<"\n\t|   "<<i<<") "<<p->info.nombre<<"\t"<<p->info.numero<<"\t"<<p->info.tipoContacto;
+			i++;
+		}
+		p = p->sgte;
+	}
+	cout<<"\n\t****************************************************************************"<<endl;			
+}
+/////////////////////////////////////////////////////////////////
+void GuardarLista(nodo *cabeza)
+{
+	ofstream archContactos;
+	struct nodo *p;
+	p = cabeza->sgte;
+	archContactos.open("Contactos.txt ");
+	int i = 1;
+	if(p->sgte == cabeza){
+		cout<<"\n *****************************************";
+		cout<<"\n |          LA LISTA ESTA VACIA          |";
+		cout<<"\n *****************************************"<<endl;
+	}
+	if(archContactos.is_open()){
+		while(p != cabeza){
+			archContactos<<p->info.nombre<<" "<<p->info.tipoContacto<<" "<<p->info.numero;
 			p=p->sgte;
 			i++;						
 		}
-		
-	ArchContactos.close();
-		
-	}else {
-		cout<<"\nNo fue posible abrir el archivo";
+		archContactos.close();	
 	}
-	
-
+	else{
+		cout<<"\n **********************************************";
+		cout<<"\n |          PROBLEMAS CON EL ARCHIVO          |";
+		cout<<"\n **********************************************"<<endl;
+	}
 }	
-
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
