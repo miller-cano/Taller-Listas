@@ -44,28 +44,37 @@ void mostrarLista(struct nodo *cabeza)
 	}
 	cout<<"\n\t****************************************************************************"<<endl;	
 }	
-///////////////////////////////////////////////////////////////////////
-void insertarInicio(struct nodo *cabeza, struct informacion datos)
-{
-    struct nodo *nuevo, *p;
-    nuevo = new(struct nodo);
-    nuevo->info = datos;
-    nuevo->sgte = cabeza->sgte;
-    cabeza->sgte=nuevo;
+//////////////////////////////////////////////////////////////
+void insertarFinal(struct nodo *cabeza, struct informacion  valores){
+	struct nodo * nuevo;
+	struct nodo *p;	
+	nuevo = new(struct nodo);
+	nuevo->info = valores;
+	nuevo->sgte=cabeza;
+	
+	p = cabeza->sgte;
+	while(p->sgte!=cabeza){
+	      p=p->sgte;
+	}
+	p->sgte = nuevo;
 }
 ///////////////////////////////////////////////////////////////////////
 void cargarArchivo(struct nodo *cabeza)
 {
     struct informacion datos;
     ifstream archivo;
-    archivo.open("agendaTelefonica.txt");
+    archivo.open("agendaTelefonica.txt", ios::in);
 	if (archivo.is_open()){
 		while(!archivo.eof()){
 			archivo>>datos.nombre>>datos.numero>>datos.tipoContacto;
-			insertarInicio(cabeza, datos); 			
+			cout<<datos.nombre<<"\t"<<datos.numero<<"\t"<<datos.tipoContacto<<endl;
+			system("pause");
+			insertarFinal(cabeza, datos); 
+			cout<<"llllllllllllllllllllll";
+			system("pause");			
 		}
-		archivo.close();
-		mostrarLista(cabeza);	
+		cout<<"SALEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+		archivo.close();	
 	}
 	else {
 	    cout<<"\n *******************************************";
@@ -73,6 +82,29 @@ void cargarArchivo(struct nodo *cabeza)
 		cout<<"\n *******************************************"<<endl;
 	}
 }
+/*void cargarArchivo(struct nodo *cabeza)
+{
+    struct informacion datos;
+    ifstream archivo;
+    archivo.open("agendaTelefonica.txt");
+	if (archivo.is_open()){
+		while(!archivo.eof()){
+			archivo>>datos.nombre>>datos.numero>>datos.tipoContacto;
+			cout<<"nnnnnnnnnnnnnnnnnnnnn";
+			system("pause");
+			insertarFinal(cabeza, datos); 
+			cout<<"llllllllllllllllllllll";
+			system("pause");			
+		}
+		cout<<"SALEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+		archivo.close();	
+	}
+	else {
+	    cout<<"\n *******************************************";
+		cout<<"\n |          ARCHIVO NO ENCONTRADO          |";
+		cout<<"\n *******************************************"<<endl;
+	}
+}*/
 //////////////////////////////////////////////////////////////////////
 void ordenarLista(struct nodo *cabeza)
 {
@@ -188,7 +220,7 @@ void eliminarElementoInfo(struct nodo *cabeza,long num)
     }
 }
 ////////////////////////////////////////////////////////////////
-void BuscarNumero(struct nodo *cabeza, long num)
+void buscarNumero(struct nodo *cabeza, long num)
 {
 	struct nodo *p;
 	int i = 1;
@@ -237,12 +269,12 @@ void mostrarListaTC(nodo *cabeza, string tpContacto)
 	cout<<"\n\t****************************************************************************"<<endl;			
 }
 /////////////////////////////////////////////////////////////////
-void GuardarLista(nodo *cabeza)
+void guardarLista(nodo *cabeza)
 {
 	ofstream archContactos;
 	struct nodo *p;
 	p = cabeza->sgte;
-	archContactos.open("Contactos.txt ");
+	archContactos.open("Contactos.txt");
 	int i = 1;
 	if(p->sgte == cabeza){
 		cout<<"\n *****************************************";
@@ -264,3 +296,4 @@ void GuardarLista(nodo *cabeza)
 	}
 }	
 /////////////////////////////////////////////////////////////////////////////////////////////////
+
