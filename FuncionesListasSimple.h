@@ -1,3 +1,11 @@
+/********************************************************************************************
+* -Funciones de listas simplemente ligadas del punto 1 del taller de listas                 *                                                   *
+* -Grupo de trabajo: MSCA y SMJ                                                             *
+* -Fecha de creación: 05/11/2020                                                            *
+* -Última modificación: 07/11/2020                                                          *
+* -Compilado usando TDM-GCC 4.9.2                                                           *                                                                                 *
+*********************************************************************************************/
+
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -5,7 +13,6 @@
 
 using namespace std;
 
-/////////////////////////////////////////////
 struct Nodo
 {
     int dato; 

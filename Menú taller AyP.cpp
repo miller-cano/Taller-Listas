@@ -1,3 +1,12 @@
+/********************************************************************************************
+* -Genera un menu con diferentes opciones y llama funciones para trabajo con las diferentes *
+*  funciones con listas                                                                     *
+* -Grupo de trabajo: MSCA, SAH y AMP                                                        *
+* -Fecha de creación: 05/11/2020                                                            *
+* -Última modificación: 07/11/2020                                                          *
+* -Compilado usando TDM-GCC 4.9.2                                                           *                                                                                 *
+*********************************************************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -144,21 +153,16 @@ int main(int argc, char** argv) {
 					cargarArchivo(cabeza);
 					do{
 						opcionPunto2 = menuPunto2();
-						if (opcionPunto2 == 2 || opcionPunto2 == 3){
-							mostrarLista(cabeza);
-							cout<<"Numero de contacto: ";
-							cin>>numb;
-						}	
 						switch(opcionPunto2){
 							case 1:
 								ordenarLista(cabeza);
 								mostrarLista(cabeza);
 								cout<<"\nINGRESE LOS DATOS DEL CONTACTO";
-								cout<<"\n1. Nombre: ";  cin>>datos.nombre;
-								cout<<"\n2. Numero: ";  cin>>datos.numero;
-								cout<<"\n3. Tipo de contacto (Trabajo,Estudio,Familia,Amigos): "; cin>>TP;
-								for(i=0;i<TP.length();i++){
-									TP[i]=toupper(TP[i]);
+								cout<<"\n\n1. Nombre: ";  cin>>datos.nombre;
+								cout<<"2. Numero: ";  cin>>datos.numero;
+								cout<<"3. Tipo de contacto (Trabajo, Estudio, Familia, Amigos, Otros): "; cin>>TP;
+								for(i = 0; i < TP.length(); i++){
+									TP[i] = toupper(TP[i]);
 								}
 								datos.tipoContacto = TP;
 								insertarOrdenado(cabeza,datos);
@@ -166,23 +170,24 @@ int main(int argc, char** argv) {
 								system("pause"); 
 								break;
 							case 2: 
-								//mostrarLista(cabeza);
+								mostrarLista(cabeza);
+								cout<<"\nNUMERO DE CONTACTO A BUSCAR: "; cin>>numb;
 								buscarNumero(cabeza,numb);
 								mostrarLista(cabeza);
 								system("pause"); 
 								break;
 							case 3: 
-								//mostrarLista(cabeza);
+								mostrarLista(cabeza);
+								cout<<"\nNUMERO DE CONTACTO A ELIMINAR: "; cin>>numb;
 								eliminarElementoInfo(cabeza,numb);
 								mostrarLista(cabeza);
 								system("pause"); 
 								break;
 							case 4: 
 								mostrarLista(cabeza);
-								cout<<"\nTipo de contacto que desea ver(Trabajo,estudio,familia,amigos): ";
-								cin>>TP;
-								for(i=0;i<TP.length();i++){
-									TP[i]=toupper(TP[i]);
+								cout<<"\nTIPO DE CONTACTO QUE DESEA VER (Trabajo, Estudio, Familia, Amigos, Otros): "; cin>>TP;
+								for(i = 0; i < TP.length(); i++){
+									TP[i] = toupper(TP[i]);
 								}
 								mostrarListaTC(cabeza,TP);
 								mostrarLista(cabeza);
@@ -190,6 +195,9 @@ int main(int argc, char** argv) {
 								break;
 							case 5:
 								guardarLista(cabeza); 
+								cout<<"\n ************************************************";
+								cout<<"\n |          PROCESO DE LISTA TERMINADO          |";
+								cout<<"\n ************************************************"<<endl;
 								break;
 							}
 					} while(opcionPunto2 != 5);
