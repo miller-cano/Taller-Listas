@@ -82,16 +82,14 @@ short menuPunto2(){
 
 int main(int argc, char** argv) {
 	short opcion;
-	int i;
-	short opcionPunto2;
+	int i, x, y;
+	int long long numb;
+	string TP;
+	short opcionPunto1, opcionPunto2;
 	struct nodo *cabeza = NULL; 
 	struct informacion datos;
-	long numb;
-	string TP;
 	struct Nodo *lista = NULL;
-	short opcionPunto1;
-	int x, y;
-	
+
 	do{
 		opcion = MENU();
 			switch(opcion){
@@ -103,44 +101,39 @@ int main(int argc, char** argv) {
 								if(lista != NULL){
 									mostrarLista(lista);
 								}
-								cout<<"\nIngrese el dato: ";
-								cin>>x;
+								cout<<"\nINGRESE EL DATO: "; cin>>x;
 								lista = crearLista(lista, x);
 								mostrarLista(lista);
 							    system("pause");
 								break;
 							case 2: 
 								mostrarLista(lista);
-								cout<<"\nIngrese el numero 1(X): ";
-								cin>>x;
-								cout<<"\nIngrese el numero 2(Y): ";
-								cin>>y;
+								cout<<"\nINGRESE EL NUMERO 1 (X): "; cin>>x;
+								cout<<"\nINGRESE EL NUMERO 2 (Y): "; cin>>y;
 								contarIguales(lista, x, y);
 								mostrarLista(lista);
 								system("pause");
 								break;
 							case 3: 
 								mostrarLista(lista);
-								cout<<"\nPosicion 1: ";
-								cin>>x;
-								cout<<"\nPosicion 2: ";
-								cin>>y;
+								cout<<"\nPOSICION 1: "; cin>>x;
+								cout<<"\nPOSICION 2: "; cin>>y;
 								lista = interPos(lista, x, y);
 								mostrarLista(lista);
 								system("pause");
 								break;
 							case 4:
 								mostrarLista(lista); 
-								cout<<"\nInformacion 1 a buscar: ";
-								cin>>x;
-								cout<<"\nInformacion 2 a buscar: ";
-								cin>>y;
+								cout<<"\nINFORMACION 1 A BUSCAR: "; cin>>x;
+								cout<<"\nINFORMACION 2 A BUSCAR: "; cin>>y;
 								buscarInfor(lista, x, y);
 								mostrarLista(lista);
 								system("pause");
 								break;		
 							case 5:
-								cout<<"\nProceso de lista terminado"<<endl;
+								cout<<"\n ************************************************";
+								cout<<"\n |          PROCESO DE LISTA TERMINADO          |";
+								cout<<"\n ************************************************"<<endl;
 								break;
 						}
 					} while(opcionPunto1 != 5);
@@ -152,26 +145,34 @@ int main(int argc, char** argv) {
 					do{
 						opcionPunto2 = menuPunto2();
 						if (opcionPunto2 == 2 || opcionPunto2 == 3){
+							mostrarLista(cabeza);
 							cout<<"Numero de contacto: ";
 							cin>>numb;
 						}	
 						switch(opcionPunto2){
 							case 1:
+								ordenarLista(cabeza);
 								mostrarLista(cabeza);
-								cout<<"\nIngrese Los datos del Contacto en el siguiente orden:	\n1. Nombre  \n2.Numero \n3. Tipo de contacto (Trabajo,Estudio,Familia,Amigos) ";
-								cin>>datos.nombre>>datos.numero>>datos.tipoContacto;
+								cout<<"\nINGRESE LOS DATOS DEL CONTACTO";
+								cout<<"\n1. Nombre: ";  cin>>datos.nombre;
+								cout<<"\n2. Numero: ";  cin>>datos.numero;
+								cout<<"\n3. Tipo de contacto (Trabajo,Estudio,Familia,Amigos): "; cin>>TP;
+								for(i=0;i<TP.length();i++){
+									TP[i]=toupper(TP[i]);
+								}
+								datos.tipoContacto = TP;
 								insertarOrdenado(cabeza,datos);
 								mostrarLista(cabeza);
 								system("pause"); 
 								break;
 							case 2: 
-								mostrarLista(cabeza);
+								//mostrarLista(cabeza);
 								buscarNumero(cabeza,numb);
 								mostrarLista(cabeza);
 								system("pause"); 
 								break;
 							case 3: 
-								mostrarLista(cabeza);
+								//mostrarLista(cabeza);
 								eliminarElementoInfo(cabeza,numb);
 								mostrarLista(cabeza);
 								system("pause"); 
@@ -188,8 +189,7 @@ int main(int argc, char** argv) {
 								system("pause"); 
 								break;
 							case 5:
-								guardarLista(cabeza);
-								system("pause"); 
+								guardarLista(cabeza); 
 								break;
 							}
 					} while(opcionPunto2 != 5);
