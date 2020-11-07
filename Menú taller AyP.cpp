@@ -1,100 +1,144 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
-
+#include "FuncionesListasCS.h"
+#include "FuncionesListasSimple.h"
 using namespace std;
 
 int main(){
-	int op, x, y, z, v;
+	struct Nodo *lista;
+	int opm,op, x, y, z, v,dato,i,espacios;
 	long Numb;
 	string TP;
+	struct informacion datos;
 	do{
-	system ("color 7c");
-	system ("cls");
+	system ("color 3B");
 	
-	cout<<"	principal		"<<endl;
-	cout<<"---------------------------";
-	cout<<"\n1. ejercicio numero 1";
-	cout<<"\n2. ejercicio numero 11";
-	cout<<"\n3.	terminar";
+	cout<<"\n*******************************";
+	cout<<"\n|      MENU PRINCIPAL"<<"         |";
+	cout<<"\n*******************************";
+	cout<<"\n| 1. Ejercicio Numero 1"<<"       |";
+	cout<<"\n*******************************";
+	cout<<"\n| 2. Ejercicio Numero 11"<<"      |";
+	cout<<"\n*******************************";
+	cout<<"\n| 3. Terminar"<<"                 |";
+	cout<<"\n*******************************";
+	cout<<"\n|    Elija una opcion:";cin>>opm;
+	cout<<"*******************************";
 	
-	cout<<"\nElija una opcion:";
-	cin>>op;
 	
 	
-	switch (op){
-			
+	switch (opm){
+		
 		case 1 :
-				cout<<"	Ejercicio numero 1		"<<endl;
-				cout<<"---------------------------------";
-				cout<<"\n1. crear la lista";
-				cout<<"\n2. cuantas veces estan X y Y en la lista";
-				cout<<"\n3. Intercambiar Valores";
-				cout<<"\n4.	terminar";
-				cout<<"\n	Elija una opcion:	";
-				cin>>op;
-				if (op == 1 || op == 3){
+			do{
+				cout<<"\n\n\n*******************************";
+				cout<<"	\n|   EJERCICIO NUMERO 1"<<"        |";
+				cout<<"\n*******************************";
+				cout<<"\n| 1. Crear Lista" <<"              |";
+				cout<<"\n*******************************";
+				cout<<"\n| 2. Cantidad de veces de X, Y" <<"|";
+				cout<<"\n*******************************";
+				cout<<"\n| 3. Intercambiar Posiciones" <<"  |";
+				cout<<"\n*******************************";
+				cout<<"\n| 4. Terminar" <<"                 |";
+				cout<<"\n*******************************";
+				cout<<"\n|    Elija una opcion:";cin>>op;
+				cout<<"*******************************";
+				
 				switch (op){
 					
-					case 1:// crear lista
-					      system("pause");break;
+					case 1:
+						cout<<"\n\n Ingrese El Dato: ";
+						cin>>dato;
+						lista = crearLista(lista,dato);
+					    system("pause");break;
 
-					case 2: cout<<"escriba valor de X";
+					case 2: cout<<"\nIngrese el Numero 1(X): ";
 							cin>>x;
-							cout<<"escriba valor de Y";
+							cout<<"\nIngrese el Numero 2(Y): ";
 							cin>>y;
-							
-							//contadordexy(punta,x,y);
+							contarIguales(lista,x,y);
 							system("pause");break;
 				
 					
-					case 3: cout<<"\nValor que desea cambiar en Z: ";
+					case 3: cout<<"\nPosicion 1 (z): ";
 							cin>>z;
-							cout<<"\nValor que desea cambiar en V: ";
+							cout<<"\nPosicion 2 (v): ";
 							cin>>v;
-							//intercambiar(punta,z,v); system("pause"); break;
-					case 4: /**/system("pause");break;
+							lista=interPos(lista,z,v);
+							system("pause");break;
+							
+							
 				}
-				cout<<endl;
-				}
+			}while(op>0 && op<4);system("pause");break;
+	
+		
 		
 		case 2: 
-				cout<<"	Ejercicio numero 11		"<<endl;
-				cout<<"---------------------------------";
-				cout<<"\n1.	Insertar ordenado";
-				cout<<"\n2.	Buscar contacto";
-				cout<<"\n3.	Borrar contacto";
-				cout<<"\n4.	Mostrar la lista (Trabajo, Estudio, Familia, Amigos)";
-				cout<<"\n5. Terminar"<<endl;
-				cout<<"		Ingrese la opcion:	";
-				cin>>op;
+			do{
+				struct nodo *cabeza;
+				/*cabeza = crearLista();
+				cargarArchivo(cabeza);*/
+				
+				cout<<"\n\n\n*******************************";
+				cout<<"	\n|   EJERCICIO NUMERO 11"<<"       |";
+				cout<<"\n*******************************";
+				cout<<"\n| 1. Insertar Ordenado" <<"        |";
+				cout<<"\n*******************************";
+				cout<<"\n| 2. Buscar Contacto" <<"          |";
+				cout<<"\n*******************************";
+				cout<<"\n| 3. Borrar Contacto" <<"          |";
+				cout<<"\n*******************************";
+				cout<<"\n| 4. Mostrar contactos por tipo"<<"|"
+						 "(Trabajo,Estudio,Familia,amigos)  |";
+				cout<<"\n*******************************";
+				cout<<"\n| 5. Terminar" <<"                 |";
+				cout<<"\n*******************************";
+				cout<<"\n|    Elija una opcion:";cin>>op;
+				cout<<"*******************************";
 				
 				if (op == 2 || op == 3){
 					cout<<"Numero de contacto: ";
 					cin>>Numb;
-				}	switch (op){
-					case 1: //insertarordenado(cabeza);
+				}	
+				
+				switch (op){
+					
+					case 1:
+					cout<<"\nIngrese Los datos del Contacto en el siguiente orden:	\n1. Nombre  \n2.Numero \n3. Tipo de contacto (Trabajo,Estudio,Familia,Amigos) ";
+					cin>>datos.nombre>>datos.numero>>datos.tipoContacto;
+					insertarOrdenado(cabeza,datos);
 					system("pause"); break;
 					
-					case 2: //BuscarNumero(cabeza,Numb); 
+					case 2: BuscarNumero(cabeza,Numb);
 					system("pause"); break;
 					
-					case 3: //eliminarElmentoInfo(cabeza,Numb);
+					case 3: eliminarElementoInfo(cabeza,Numb);
 					system("pause"); break;
 					
 					case 4: 
 					
 					cout<<"\nTipo de contacto que desea ver(Trabajo,estudio,familia,amigos): ";
 					cin>>TP;
-					//MostrarListaTC(cabeza,TP);
-					system("pause"); break;
 					
-					case 5: //GuardarLista(cabeza);
-							system("pause");break;
-				}	
-		case 3: cout <<"Gracias Por Revisar El Proyecto"; system("pause");break;			
+					
+					for(i=0;i<TP.length();i++){
+						TP[i]=toupper(TP[i]);
+					}
+					mostrarListaTC(cabeza,TP);
+					system("pause"); break;
+				
+				
+				}
+		}while(op>0 && op<5);system("pause");break;
+		
+	case 3: cout <<"Gracias Por Revisar El Proyecto"; system("pause");break;			
 	}
-}while (op>=0 && op<=3);
+		system ("cls");
+}while (opm>=0 && opm<3);
+cout<<"\nEl proyecto ha finalizado";
+
 
 return 0;
 }
