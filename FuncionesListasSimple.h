@@ -16,15 +16,17 @@ void mostrarLista(struct Nodo *lista){
 	int i = 1;
 	struct Nodo *p;
 	p = lista;
-	cout<<"\n\t*****************************************";
-	cout<<"\n\t|                 LISTA                 |";
-	cout<<"\n\t*****************************************";
-	while(p != NULL) {
-		cout<<"\n\t|   "<<i<<") "<<p->dato;
-		p = p->sgte;
-		i++;
+	if(p != NULL){
+		cout<<"\n\t*****************************************";
+		cout<<"\n\t|                 LISTA                 |";
+		cout<<"\n\t*****************************************";
+		while(p != NULL) {
+			cout<<"\n\t|   "<<i<<") "<<p->dato;
+			p = p->sgte;
+			i++;
+		}
+		cout<<"\n\t*****************************************"<<endl;
 	}
-	cout<<"\n\t*****************************************"<<endl;
 }
 ///////////////////////////////////////////////////////////////////
 struct Nodo *crearLista(struct Nodo *lista, int dato)
@@ -91,7 +93,7 @@ void contarIguales(Nodo *lista,int x, int y)
 			cout<<"\n |          EL ELEMENTO "<<x<<" SE ENCONTRO "<<contX<<" VECES EN LA LISTA";
 			cout<<"\n *******************************************************************************"<<endl;
 			cout<<"\n *******************************************************************************";
-			cout<<"\n |          EL ELEMENTO "<<y<<" SE ENCONTRO "<<contX<<" VECES EN LA LISTA";
+			cout<<"\n |          EL ELEMENTO "<<y<<" SE ENCONTRO "<<contY<<" VECES EN LA LISTA";
 			cout<<"\n *******************************************************************************"<<endl;
 		}
 	}	
@@ -146,12 +148,12 @@ void buscarInfor(Nodo *lista, int info1, int info2)
 	while(p != NULL){	
 		if(p->dato == info1){
 			cout<<"\n *******************************************************************************";
-			cout<<"\n |          LA INFORMACION 1 ["<<info1<<"] SE ENCONTRO EN LA POSICION"<<i;
+			cout<<"\n |          LA INFORMACION 1 ["<<info1<<"] SE ENCONTRO EN LA POSICION "<<i;
 			cout<<"\n *******************************************************************************"<<endl;
 		}
 		if(p->dato == info2){
 			cout<<"\n *******************************************************************************";
-			cout<<"\n |          LA INFORMACION 2 ["<<info2<<"] SE ENCONTRO EN LA POSICION"<<i;
+			cout<<"\n |          LA INFORMACION 2 ["<<info2<<"] SE ENCONTRO EN LA POSICION "<<i;
 			cout<<"\n *******************************************************************************"<<endl;
 		}
 		p = p->sgte;
