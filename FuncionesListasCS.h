@@ -10,7 +10,7 @@ using namespace std;
 struct informacion
 {
 	string nombre; 
-    long numero;
+    int long long numero;
     string tipoContacto;
 };
 
@@ -38,7 +38,7 @@ void mostrarLista(struct nodo *cabeza)
 	cout<<"\n\t|                 CONTACTOS";
 	cout<<"\n\t*****************************************************************************";
 	while(p != cabeza) {
-		cout<<"\n\t|   "<<i<<") "<<p->info.nombre<<"\t"<<p->info.numero<<"\t"<<p->info.tipoContacto;
+		cout<<"\n\t|   "<<i<<") "<<p->info.nombre<<"\t\t"<<p->info.numero<<"\t\t"<<p->info.tipoContacto;
 		i++;
 		p = p->sgte;
 	}
@@ -51,7 +51,6 @@ void insertarFinal(struct nodo *cabeza, struct informacion  valores){
 	nuevo = new(struct nodo);
 	nuevo->info = valores;
 	nuevo->sgte=cabeza;
-	
 	p = cabeza->sgte;
 	while(p->sgte!=cabeza){
 	      p=p->sgte;
@@ -63,22 +62,24 @@ void cargarArchivo(struct nodo *cabeza)
 {
     struct informacion datos;
     ifstream archivo;
-    archivo.open("agendaTelefonica.txt", ios::in);
+    archivo.open("agendaContactos.txt", ios::in);
 	if (archivo.is_open()){
 		while(!archivo.eof()){
-			archivo>>datos.nombre>>datos.numero>>datos.tipoContacto;
-			cout<<datos.nombre<<"\t"<<datos.numero<<"\t"<<datos.tipoContacto<<endl;
+			archivo>>datos.numero>>datos.nombre>>datos.tipoContacto;
 			insertarFinal(cabeza, datos); 			
 		}
-		archivo.close();	
+		archivo.close();
+		mostrarLista(cabeza);
+		system("pause");	
 	}
 	else {
 	    cout<<"\n *******************************************";
 		cout<<"\n |          ARCHIVO NO ENCONTRADO          |";
 		cout<<"\n *******************************************"<<endl;
+		system("pause");
 	}
 }
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
 void ordenarLista(struct nodo *cabeza)
 {
 	struct nodo *p;
@@ -88,7 +89,7 @@ void ordenarLista(struct nodo *cabeza)
 		q = p;
 		string auxNombre;
 		string auxTipoContacto;
-		long auxNumero;
+		int long long auxNumero;
 		while(q->sgte != cabeza){
 			t = q->sgte;
 			while(t != cabeza){
@@ -120,7 +121,6 @@ void ordenarLista(struct nodo *cabeza)
 ///////////////////////////////////////////////////////////////////////////
 void insertarOrdenado(struct nodo *cabeza, struct informacion datos)
 {
-	ordenarLista(cabeza);
 	struct nodo *nuevo , *p = NULL, *a = NULL;
 	nuevo = new(struct nodo);
 	nuevo->info = datos;
@@ -130,25 +130,25 @@ void insertarOrdenado(struct nodo *cabeza, struct informacion datos)
 	}
 	else{
 		p = cabeza->sgte;
-		if(datos.numero < p->info.numero){
+		if(nuevo->info.numero < p->info.numero){
 			nuevo->sgte = p;
 			cabeza->sgte = nuevo;
 		}
-				else{
-					while(datos.numero > p->info.numero){
-						a = p;
-						p = p->sgte;
-					}
-					a->sgte = nuevo;
-					nuevo->sgte = p;
+			else{
+				while(nuevo->info.numero > p->info.numero && p != cabeza){
+					a = p;
+					p = p->sgte;
 				}
+				a->sgte = nuevo;
+				nuevo->sgte = p;
+			}
 	}
 	cout<<"\n ************************************";
 	cout<<"\n |          DATO INSERTADO          |";
 	cout<<"\n ************************************"<<endl;
 }
 /////////////////////////////////////////////////////////////////////////////
-void eliminarElementoInfo(struct nodo *cabeza,long num)
+void eliminarElementoInfo(struct nodo *cabeza, int long long num)
 {
     if(cabeza->sgte == cabeza){
         cout<<"\n *****************************************";
@@ -193,7 +193,7 @@ void eliminarElementoInfo(struct nodo *cabeza,long num)
     }
 }
 ////////////////////////////////////////////////////////////////
-void buscarNumero(struct nodo *cabeza, long num)
+void buscarNumero(struct nodo *cabeza, int long long num)
 {
 	struct nodo *p;
 	int i = 1;
@@ -234,7 +234,7 @@ void mostrarListaTC(nodo *cabeza, string tpContacto)
 	cout<<"\n\t*****************************************************************************";
 	while(p != cabeza) {
 		if(tpContacto == p->info.tipoContacto){
-			cout<<"\n\t|   "<<i<<") "<<p->info.nombre<<"\t"<<p->info.numero<<"\t"<<p->info.tipoContacto;
+			cout<<"\n\t|   "<<i<<") "<<p->info.nombre<<"\t\t"<<p->info.numero<<"\t\t"<<p->info.tipoContacto;
 			i++;
 		}
 		p = p->sgte;
@@ -256,11 +256,14 @@ void guardarLista(nodo *cabeza)
 	}
 	if(archContactos.is_open()){
 		while(p != cabeza){
-			archContactos<<p->info.nombre<<" "<<p->info.tipoContacto<<" "<<p->info.numero;
+			archContactos<<p->info.numero<<" "<<p->info.nombre<<" "<<p->info.tipoContacto<<"\n";
 			p=p->sgte;
 			i++;						
 		}
-		archContactos.close();	
+		archContactos.close();
+		cout<<"\n *****************************************************";
+		cout<<"\n |          LA LISTA FUE GUARDADA CON EXITO          |";
+		cout<<"\n *****************************************************"<<endl;	
 	}
 	else{
 		cout<<"\n **********************************************";
