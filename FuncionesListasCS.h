@@ -1,3 +1,12 @@
+/********************************************************************************************
+* -Funciones de listas circulares simplemente ligadas con nodo de emcabezamiento del punto  *
+* 11 del taller de listas                                                                   *
+* -Grupo de trabajo: MSCA y SAH                                                             *
+* -Fecha de creación: 05/11/2020                                                            *
+* -Última modificación: 07/11/2020                                                          *
+* -Compilado usando TDM-GCC 4.9.2                                                           *                                                                                 *
+*********************************************************************************************/
+
 #include <fstream>
 #include <string>
 #include <stdio.h>
@@ -6,7 +15,6 @@
 
 using namespace std;
 
-/////////////////////////////////////////////////////////////////////////
 struct informacion
 {
 	string nombre; 
